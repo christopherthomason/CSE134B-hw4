@@ -1,0 +1,279 @@
+/* main.css */
+
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    body {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .flexbox {
+        margin: auto;
+        width: 80dvw;
+    }
+}
+
+@media (min-width: 1025px) {
+    body {
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .flexbox {
+        margin: auto;
+        width: 75dvw;
+    }
+}
+
+:root {
+    --main-font-family: "Roboto";
+    --main-background-color: white;
+    --main-alternate-color: lightskyblue;
+}
+
+html,
+body {
+    background-color: var(--main-background-color, white);
+}
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/Roboto/static/Roboto-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Roboto";
+    font-style: bold;
+    font-weight: 400;
+    src: url("../fonts/Roboto/static/Roboto-Bold.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 400;
+    src: url("../fonts/Roboto/static/Roboto-Italic.ttf") format("truetype");
+}
+
+/** header **/
+header {
+    width: 95%;
+    height: 7.5%;
+    display: flex;
+    background-color: var(--main-alternate-color, lightskyblue);
+    text-align: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--main-font-family, "Arial");
+    border-radius: 30px;
+    margin: 1% auto;
+
+    & nav {
+        align-content: center;
+        font-size: large;
+    }
+}
+
+header a:link {
+    color: blue;
+}
+
+header a:visited {
+    color: slateblue;
+}
+
+header a:visited:hover {
+    text-decoration: underline;
+}
+
+header a:hover {
+    text-decoration: underline;
+    color: rgb(166, 77, 255);
+}
+
+/** flexbox in main **/
+
+main {
+    text-align: center;
+    font-family: var(--main-font-family, "Arial");
+}
+
+.home-flexbox {
+    display: flex;
+    height: 60%;
+    width: 85%;
+    background-color: var(--main-background-color, white);
+    padding: 5%;
+    align-items: center;
+    margin: auto;
+}
+
+.home-flexbox a {
+    text-decoration: none;
+}
+
+.left-flexbox {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    gap: 10px;
+}
+
+.right-flexbox {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-box {
+    max-width: 95%;
+    color: var(--main-background-color, white);
+    background: var(--main-alternate-color, lightskyblue);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.home-box:hover {
+    transform: scale(1.05);
+}
+
+.home-box-right {
+    max-width: 55%;
+    color: var(--main-background-color, white);
+    background: var(--main-alternate-color, lightskyblue);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.flexbox {
+    display: flex;
+    background-color: var(--main-background-color, white);
+    padding: 2%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+
+    & section {
+        text-align: left;
+    }
+}
+
+.box {
+    color: black;
+    margin: 1.25em
+}
+
+picture:not(:has(img)) {
+    display: none;
+}
+
+img {
+    align-self: flex-end;
+    object-fit: cover;
+    object-position: right top;
+}
+
+/** other main elements **/
+button {
+    background: gray;
+    color: white;
+    padding: 1% 1%;
+    border: none;
+    cursor: pointer;
+    transition: lightblue 0.25s ease-in, transform 0.25s;
+}
+
+button:hover {
+    background: lightblue;
+    transform: scale(1.1);
+}
+
+/** footer **/
+footer {
+    font-size: small;
+    text-align: center;
+}
+
+/* Project tab animation */
+.orbit-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-mass {
+    width: 75px;
+    height: 75px;
+    background: black;
+    background: color-mix(in srgb, color(display-p3 0.1 0.8 0.8) 55%, black 45%);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.orbit {
+    width: 120px; 
+    height: 120px;
+    position: absolute;
+    animation: orbit 4s linear infinite;
+}
+
+.orbiting-mass {
+    width: 25px;
+    height: 25px;
+    background: lightskyblue;
+    background: color(rec2020 0.1 0.8 0.8);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateX(70px);
+}
+
+@keyframes orbit {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+.wip-message-container {
+    width: 200;
+    height: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.wip-message {
+    color: lightskyblue;
+    animation: wip-bounce 5s linear infinite;
+}
+
+@keyframes wip-bounce {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px) scale(1.5); }
+    100% { transform: translateY(0px); }
+}

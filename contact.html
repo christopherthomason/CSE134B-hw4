@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Christopher Thomason Portfolio</title>
+    <link href="assets/styles/main.css" rel="stylesheet">
+    <link href="assets/images/favicon.ico" rel="icon">
+</head>
+
+<body>
+    <header>
+        <h1>
+            Christopher Thomason
+        </h1>
+        <nav>
+            <a href="/index.html">Home</a>
+            <a href="/portfolio.html">Portfolio</a>
+            <a href="/about.html">About Me</a>
+            <a href="/contact.html">Contact Me</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="flexbox">
+            <h1>Contact Me</h1>
+
+            <p class="box">Email me at <em>christophercthomason@gmail.com</em> or fill out the information below to send me a message!</p>
+
+            <form action="/submit" method="post" class="box">
+                <fieldset class="box">
+                    <legend>Contact Information</legend>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </fieldset>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" cols="40"></textarea>
+
+                <a href="/contact.html">
+                    <button class="box">Send</button>   
+                </a>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p>This page was developed by Christopher Thomason</p>
+    </footer>
+</body>
+
+</html>
