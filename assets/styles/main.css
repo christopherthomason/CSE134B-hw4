@@ -35,14 +35,52 @@
 
 :root {
     --main-font-family: "Roboto";
-    --main-background-color: white;
-    --main-alternate-color: lightskyblue;
-    --tertiary-color: #FFCC99;
+    --main-background-color: #FFFFFF;
+    --primary-color: #5A67D8;
+    --secondary-color: #E0E0E0;
+    --accent-color: #F8F9FA;
+    --text-color: #222222;
+}
+
+.light-theme {
+    --main-font-family: "Roboto";
+    --main-background-color: #FFFFFF;
+    --primary-color: #5A67D8;
+    --secondary-color: #E0E0E0;
+    --accent-color: #F8F9FA;
+    --text-color: #222222;
+}
+
+.dark-theme {
+    --main-background-color: #0D0D0D;
+    --primary-color: #1E1E2E;
+    --secondary-color: #4A90E2;
+    --accent-color: #76EEC6;
+    --text-color: #EAEAEA;
+}
+
+.retro-theme {
+    --main-font-family: 'RusticShine';
+    --main-background-color: #121212;
+    --primary-color: #6A0DAD;
+    --secondary-color: #FF007F;
+    --accent-color: #00F0FF;
+    --text-color: #FAFAFA;
+}
+
+.luxury-theme {
+    --main-font-family: 'Cinzel';
+    --main-background-color: #F5F5F5;
+    --primary-color: #8B0000;
+    --secondary-color: #1A237E;
+    --accent-color: #FFD700;
+    --text-color: #333333;
 }
 
 html,
 body {
     background-color: var(--main-background-color, white);
+    margin: 0;
 }
 @font-face {
     font-family: "Roboto";
@@ -62,13 +100,25 @@ body {
     font-weight: 400;
     src: url("../fonts/Roboto/static/Roboto-Italic.ttf") format("truetype");
 }
+@font-face {
+    font-family: "RusticShine";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/RusticShine/RusticShine.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Cinzel";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/Cinzel/static/Cinzel-Regular.ttf") format("truetype");
+}
 
 /** header **/
 header {
     width: 95%;
     height: 7.5%;
     display: flex;
-    background-color: var(--main-alternate-color, lightskyblue);
+    background-color: var(--primary-color, lightskyblue);
     text-align: center;
     padding-left: 2%;
     padding-right: 2%;
@@ -85,21 +135,30 @@ header {
     }
 }
 
-header a:link {
-    color: blue;
+#theme-selector {
+    display: none;
 }
 
-header a:visited {
-    color: slateblue;
+a:link {
+    color: var(--accent-color, white);
 }
 
-header a:visited:hover {
+a:visited {
+    color: var(--accent-color, white);
+}
+
+a:visited:hover {
     text-decoration: underline;
 }
 
-header a:hover {
+a:hover {
     text-decoration: underline;
     color: rgb(166, 77, 255);
+}
+
+.header-nav-theme-box {
+    display: flex;
+    gap: 20px;
 }
 
 /** flexbox in main **/
@@ -113,8 +172,8 @@ main h1 {
     position: absolute;
     left: 40%;
     border-radius: 20px;
-    color: var(--main-background-color, white);
-    background: var(--main-alternate-color, lightskyblue);
+    color: var(--text-color, black);
+    background: var(--primary-color, lightskyblue);
     text-align: center;
     font-size: xx-large;
     width: 20%;
@@ -152,8 +211,8 @@ main h1 {
 
 .home-box {
     max-width: 95%;
-    color: var(--main-background-color, white);
-    background: var(--main-alternate-color, lightskyblue);
+    color: var(--text-color, white);
+    background: var(--primary-color, lightskyblue);
     border-radius: 15px;
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -167,8 +226,8 @@ main h1 {
 
 .home-box-right {
     max-width: 55%;
-    color: var(--main-background-color, white);
-    background: var(--main-alternate-color, lightskyblue);
+    color: var(--text-color, white);
+    background: var(--primary-color, lightskyblue);
     border-radius: 15px;
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -189,8 +248,8 @@ main h1 {
 
 .about-box {
     padding: 15px;
-    background: var(--main-alternate-color, lightskyblue);
-    color: var(--main-background-color, white);
+    background: var(--primary-color, lightskyblue);
+    color: var(--text-color, white);
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
@@ -227,8 +286,8 @@ main h1 {
     width: 60%;
     display: flex;
     flex-direction: column;
-    background: var(--main-alternate-color, lightskyblue);
-    color: var(--main-background-color, white);
+    background: var(--primary-color, lightskyblue);
+    color: var(--text-color, white);
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
@@ -239,8 +298,8 @@ main h1 {
     width: 60%;
     display: flex;
     flex-direction: column;
-    background: var(--main-alternate-color, lightskyblue);
-    color: var(--main-background-color, white);
+    background: var(--primary-color, lightskyblue);
+    color: var(--text-color, white);
     text-align: left;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
@@ -285,7 +344,7 @@ fieldset {
 }
 
 fieldset button {
-    background: var(--tertiary-color, black);
+    background: var(--accent-color, black);
     color: var(--main-background-color, white);
 }
 
@@ -295,9 +354,33 @@ label.required::after {
     font-weight: bold;
 }
 
+label.optional {
+    font-weight: italic;
+}
+
 output.info {
     font-size: small;
     font-style: italic;
+}
+
+input:user-invalid {
+    border: 2px solid red;
+}
+input:user-invalid + span::before {
+    content: " invalid input";
+    color: red;
+}
+
+input:user-valid {
+    border: 2px solid rgb(27, 141, 27);
+}
+
+textarea:user-invalid {
+    border: 1px solid red;
+}
+
+textarea {
+    border: 1px solid gray;
 }
 
 .box {
@@ -408,4 +491,10 @@ footer {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-20px) scale(1.5); }
     100% { transform: translateY(0px); }
+}
+
+footer {
+    background-color: var(--main-background-color, white);
+    color: var(--text-color, black);
+    margin-bottom: 0;
 }

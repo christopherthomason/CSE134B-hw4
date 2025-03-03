@@ -13,12 +13,21 @@
         <h1>
             Christopher Thomason
         </h1>
-        <nav>
-            <a href="/index.html">Home</a>
-            <a href="/portfolio.html">Portfolio</a>
-            <a href="/about.html">About Me</a>
-            <a href="/contact.html">Contact Me</a>
-        </nav>
+        <div class="header-nav-theme-box">
+            <label for="theme-selector">Select Theme:</label>
+            <select id="theme-selector">
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+                <option value="retro">Retro</option>
+                <option value="luxury">Luxury</option>
+            </select>
+            <nav>
+                <a href="/index.html">Home</a>
+                <a href="/portfolio.html">Portfolio</a>
+                <a href="/about.html">About Me</a>
+                <a href="/contact.html">Contact Me</a>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -82,6 +91,8 @@
         <hr>
         <p>This page was developed by Christopher Thomason</p>
     </footer>
+
+    <script src="assets/scripts/themeSelector.js"></script>
 </body>
 
 </html>

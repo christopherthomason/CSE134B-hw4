@@ -14,12 +14,21 @@
         <h1>
             Christopher Thomason
         </h1>
-        <nav>
-            <a href="/index.html">Home</a>
-            <a href="/portfolio.html">Portfolio</a>
-            <a href="/about.html">About Me</a>
-            <a href="/contact.html">Contact Me</a>
-        </nav>
+        <div class="header-nav-theme-box">
+            <label for="theme-selector">Select Theme:</label>
+            <select id="theme-selector">
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+                <option value="retro">Retro</option>
+                <option value="luxury">Luxury</option>
+            </select>
+            <nav>
+                <a href="/index.html">Home</a>
+                <a href="/portfolio.html">Portfolio</a>
+                <a href="/about.html">About Me</a>
+                <a href="/contact.html">Contact Me</a>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -29,7 +38,7 @@
             <section class="contact-socials-box">
                 <p><strong>Email:</strong> <a href="mailto:cthomason@ucsd.edu">cthomason@ucsd.edu</a></p>
                 <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/christopher-thomason/">https://www.linkedin.com/in/christopher-thomason/</a></p>
-                <p><strong>GitHub</strong> <a href="https://github.com/christopherthomason">https://github.com/christopherthomason</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/christopherthomason">https://github.com/christopherthomason</a></p>
             </section>
             
             <section class="contact-box">
@@ -42,16 +51,17 @@
 
                         <label for="email" class="required">Email:</label><br>
                         <input type="email" id="email" name="email" required class="name-email">
+                        <span></span>
                         <br><br>
 
                         <label for="subject">Subject:</label><br>
-                        <input type="text" id="subject" name="subject">
+                        <input type="text" id="subject" name="subject" optional>
                         <br><br>
 
                         <label for="comments" class="required">Comments:</label><br>
-                        <textarea id="comments" name="comments" rows="5" cols="40" required></textarea>
+                        <textarea id="comments" name="comments" rows="5" cols="40" required maxlength="200"></textarea>
                         <br>
-                        <output class="info" id="info-output">0 characters</output>
+                        <output class="info" id="info-output">0/200 characters</output>
                         <br><br>
 
                         <button type="submit">Send Message</button>
@@ -61,34 +71,7 @@
                     <output class="submitted" id="submitted-message"></output>
                 </form>
 
-                <script>
-                    const textarea = document.getElementById("comments");
-                    const info = document.getElementById("info-output");
-
-                    textarea.addEventListener("input", function() {
-                        info.textContent = textarea.value.length + " characters";
-                    });
-
-                    document.getElementById("contact-form").addEventListener("submit", function(e) {
-                        e.preventDefault();
-
-                        let formData = new FormData(this);
-
-                        fetch("https://httpbin.org/post", {
-                            method: "POST",
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log("Response from httpbin: ", data);
-                            document.getElementById("submitted-message").textContent = "Your message has been sent successfully!";
-                        })
-                        .catch(error => {
-                            console.error("Error: ", error);
-                            document.getElementById("error-message").textContent = "There was an error sending your message.";
-                        });
-                    });
-                </script>
+                
             </section>
         </div>
     </main>
@@ -97,6 +80,49 @@
         <hr>
         <p>This page was developed by Christopher Thomason</p>
     </footer>
+
+    <script>
+        const textarea = document.getElementById("comments");
+        const info = document.getElementById("info-output");
+
+        textarea.addEventListener("input", function() {
+            info.textContent = textarea.value.length + "/200 characters"; // used for character counter
+        });
+
+        textarea.addEventListener("input", function() {
+            const validPattern = /^[a-zA-Z0-9 .,!?'"()\-]*$/;
+
+            if (!validPattern.test(textarea.value)) {
+                document.getElementById("error-message").textContent = "Invalid character in comments.";
+                textarea.style.border = "1px red solid";
+            } else {
+                document.getElementById("error-message").textContent = "";
+                textarea.style.border = "1px gray solid";
+            }
+        });
+
+        document.getElementById("contact-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            fetch("https://httpbin.org/post", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response from httpbin: ", data);
+                document.getElementById("submitted-message").textContent = "Your message has been sent successfully!";
+            })
+            .catch(error => {
+                console.error("Error: ", error);
+                document.getElementById("error-message").textContent = "There was an error sending your message.";
+            });
+        });
+    </script>
+
+    <script src="assets/scripts/themeSelector.js"></script>
 </body>
 
 </html>
