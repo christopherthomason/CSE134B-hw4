@@ -23,26 +23,73 @@
     </header>
 
     <main>
-        <div class="flexbox">
-            <h1>Contact Me</h1>
+        <h1>Contact Me</h1>
 
-            <p class="box">Email me at <em>christophercthomason@gmail.com</em> or fill out the information below to send me a message!</p>
+        <div class="contact-container">
+            <section class="contact-socials-box">
+                <p><strong>Email:</strong> <a href="mailto:cthomason@ucsd.edu">cthomason@ucsd.edu</a></p>
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/christopher-thomason/">https://www.linkedin.com/in/christopher-thomason/</a></p>
+                <p><strong>GitHub</strong> <a href="https://github.com/christopherthomason">https://github.com/christopherthomason</a></p>
+            </section>
+            
+            <section class="contact-box">
+                <h2>Send Me a Message</h2>
+                <form id = "contact-form" action="https://httpbin.org/post" method="post">
+                    <fieldset>
+                        <label for="name" class="required">Name:</label><br>
+                        <input type="text" id="name" name="name" required class="name-email">
+                        <br><br>
 
-            <form action="/submit" method="post" class="box">
-                <fieldset class="box">
-                    <legend>Contact Information</legend>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email">
-                </fieldset>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" cols="40"></textarea>
+                        <label for="email" class="required">Email:</label><br>
+                        <input type="email" id="email" name="email" required class="name-email">
+                        <br><br>
 
-                <a href="/contact.html">
-                    <button class="box">Send</button>   
-                </a>
-            </form>
+                        <label for="subject">Subject:</label><br>
+                        <input type="text" id="subject" name="subject">
+                        <br><br>
+
+                        <label for="comments" class="required">Comments:</label><br>
+                        <textarea id="comments" name="comments" rows="5" cols="40" required></textarea>
+                        <br>
+                        <output class="info" id="info-output">0 characters</output>
+                        <br><br>
+
+                        <button type="submit">Send Message</button>
+                    </fieldset>
+
+                    <output class="error" id = "error-message"></output>
+                    <output class="submitted" id="submitted-message"></output>
+                </form>
+
+                <script>
+                    const textarea = document.getElementById("comments");
+                    const info = document.getElementById("info-output");
+
+                    textarea.addEventListener("input", function() {
+                        info.textContent = textarea.value.length + " characters";
+                    });
+
+                    document.getElementById("contact-form").addEventListener("submit", function(e) {
+                        e.preventDefault();
+
+                        let formData = new FormData(this);
+
+                        fetch("https://httpbin.org/post", {
+                            method: "POST",
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Response from httpbin: ", data);
+                            document.getElementById("submitted-message").textContent = "Your message has been sent successfully!";
+                        })
+                        .catch(error => {
+                            console.error("Error: ", error);
+                            document.getElementById("error-message").textContent = "There was an error sending your message.";
+                        });
+                    });
+                </script>
+            </section>
         </div>
     </main>
 
