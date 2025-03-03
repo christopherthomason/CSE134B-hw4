@@ -74,7 +74,7 @@
     --primary-color: #8B0000;
     --secondary-color: #1A237E;
     --accent-color: #FFD700;
-    --text-color: #333333;
+    --text-color: #FAFAFA;
 }
 
 html,
@@ -122,7 +122,7 @@ header {
     text-align: center;
     padding-left: 2%;
     padding-right: 2%;
-    color: white;
+    color: var(--text-color, white);
     justify-content: space-between;
     align-items: center;
     font-family: var(--main-font-family, "Arial");
@@ -343,11 +343,6 @@ fieldset {
     border-width: 0;
 }
 
-fieldset button {
-    background: var(--accent-color, black);
-    color: var(--main-background-color, white);
-}
-
 label.required::after {
     content: " *";
     color: red;
@@ -406,18 +401,17 @@ img {
     color: rgb(27, 141, 27);
 }
 
-/** other main elements **/
 button {
-    background: gray;
-    color: white;
-    padding: 1% 1%;
-    border: none;
-    cursor: pointer;
-    transition: lightblue 0.25s ease-in, transform 0.25s;
+    background-color: var(--secondary-color, white);
+    color: var(--text-color, black);
+    border-radius: 10px;
+    border-color: var(--secondary-color, white);
+    transition: ease-in-out 0.3s;
+    padding: 10px 20px;
+    font-style: bold;
 }
 
 button:hover {
-    background: lightblue;
     transform: scale(1.1);
 }
 

@@ -46,11 +46,11 @@
                 <form id = "contact-form" action="https://httpbin.org/post" method="post">
                     <fieldset>
                         <label for="name" class="required">Name:</label><br>
-                        <input type="text" id="name" name="name" required class="name-email">
+                        <input type="text" id="name" name="name" class="name-email">
                         <br><br>
 
                         <label for="email" class="required">Email:</label><br>
-                        <input type="email" id="email" name="email" required class="name-email">
+                        <input type="email" id="email" name="email" class="name-email">
                         <span></span>
                         <br><br>
 
@@ -59,9 +59,9 @@
                         <br><br>
 
                         <label for="comments" class="required">Comments:</label><br>
-                        <textarea id="comments" name="comments" rows="5" cols="40" required maxlength="200"></textarea>
+                        <textarea id="comments" name="comments" rows="5" cols="40" maxlength="200"></textarea>
                         <br>
-                        <output class="info" id="info-output">0/200 characters</output>
+                        <output class="info" id="info-output">Characters remaining: 200</output>
                         <br><br>
 
                         <button type="submit">Send Message</button>
@@ -82,43 +82,115 @@
     </footer>
 
     <script>
-        const textarea = document.getElementById("comments");
-        const info = document.getElementById("info-output");
+        const form = document.getElementById('contact-form');
+        const errorMessage = document.getElementById('error-message');
+        const submittedMessage = document.getElementById('submitted-message');
+        let formErrors = []; // To capture the errors
 
-        textarea.addEventListener("input", function() {
-            info.textContent = textarea.value.length + "/200 characters"; // used for character counter
-        });
+        // Utility function to handle errors
+        function displayError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.color = 'red';
+            errorMessage.style.display = 'block';
+        }
 
-        textarea.addEventListener("input", function() {
-            const validPattern = /^[a-zA-Z0-9 .,!?'"()\-]*$/;
-
-            if (!validPattern.test(textarea.value)) {
-                document.getElementById("error-message").textContent = "Invalid character in comments.";
-                textarea.style.border = "1px red solid";
+        // Masking mechanism (illegal characters)
+        function maskInput(event) {
+            const input = event.target;
+            const pattern = /^[a-zA-Z0-9 ]*$/;  // Example: only alphanumeric characters and spaces allowed
+            if (!pattern.test(input.value)) {
+                input.style.border = '2px solid red';
+                displayError('Invalid character entered.');
+                input.setCustomValidity('Invalid character entered.');
             } else {
-                document.getElementById("error-message").textContent = "";
-                textarea.style.border = "1px gray solid";
+                input.style.border = 'none';
+                errorMessage.style.display = 'none';
+                input.setCustomValidity('');
             }
-        });
+        }
 
-        document.getElementById("contact-form").addEventListener("submit", function(e) {
+
+        // Character limit countdown
+        const commentsField = document.getElementById('comments');
+        const maxLength = commentsField.getAttribute('maxlength');
+        const remainingCharacters = document.getElementById('info-output');
+
+        function updateCharacterCount() {
+            const remaining = maxLength - commentsField.value.length;
+            remainingCharacters.textContent = `Characters remaining: ${remaining}`;
+
+            if (remaining <= 50) {
+                remainingCharacters.style.color = 'orange';
+            }
+
+            if (remaining <= 0) {
+                remainingCharacters.style.color = 'red';
+                commentsField.setCustomValidity('Character limit exceeded.');
+            } else {
+                commentsField.setCustomValidity('');
+            }
+        }
+
+        // Add event listeners
+        document.getElementById('name').addEventListener('input', maskInput);
+        document.getElementById('subject').addEventListener('input', maskInput);
+        commentsField.addEventListener('input', updateCharacterCount);
+        commentsField.addEventListener('input', maskInput);
+
+        // Form submission event
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
+            formErrors = [];
 
-            let formData = new FormData(this);
+            let isValid = true;
 
-            fetch("https://httpbin.org/post", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Response from httpbin: ", data);
-                document.getElementById("submitted-message").textContent = "Your message has been sent successfully!";
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-                document.getElementById("error-message").textContent = "There was an error sending your message.";
-            });
+            form.querySelectorAll('input, textarea').forEach(input => input.setCustomValidity(''));
+
+            // Validate each field
+            const nameField = document.getElementById('name');
+            const emailField = document.getElementById('email');
+            const subjectField = document.getElementById('subject');
+
+            if (!nameField.value.trim()) {
+                nameField.setCustomValidity('Name is required.');
+                formErrors.push({ field: 'name', message: 'Name is required.' });
+                isValid = false;
+            }
+
+            if (!emailField.value.trim() || !emailField.checkValidity()) {
+                emailField.setCustomValidity('Valid email is required.');
+                formErrors.push({ field: 'email', message: 'Valid email is required.' });
+                isValid = false;
+            }
+
+            if (!subjectField.value.trim()) {
+                subjectField.setCustomValidity('Subject is required.');
+                formErrors.push({ field: 'subject', message: 'Subject is required.' });
+                isValid = false;
+            }
+
+            if (commentsField.value.trim().length === 0) {
+                commentsField.setCustomValidity('Message is required.');
+                formErrors.push({ field: 'message', message: 'Message is required.' });
+                isValid = false;
+            }
+
+            if (formErrors.length > 0) {
+                displayError('There were errors with the form. Please check your input.');
+            }
+            if (!isValid) {
+                displayError('There were errors with the form. Please check your input.');
+                // Add errors to the form-errors field
+                const formErrorsInput = document.createElement('input');
+                formErrorsInput.setAttribute('type', 'hidden');
+                formErrorsInput.setAttribute('name', 'form-errors');
+                formErrorsInput.setAttribute('value', JSON.stringify(formErrors));
+                console.log(JSON.stringify(formErrors));
+                form.appendChild(formErrorsInput);
+            } else {
+                // If form is valid, display the success message
+                submittedMessage.textContent = "Your message has been sent.";
+            }
         });
     </script>
 
